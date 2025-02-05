@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Button from "./common/button";
 import InputComponent from "./common/input";
+import { useNavigate } from "react-router-dom";
 
 const AddUser = () => {
+    const navigate=useNavigate()
     const generateUserId=()=>{
         const curr_date=new Date() 
         let id_str=curr_date.toLocaleString().toLocaleUpperCase().replaceAll("/", "").replaceAll(",", '')
@@ -23,6 +25,10 @@ const AddUser = () => {
     const userDataList=JSON.parse(localStorage.getItem("userData"))||[]
     const newUserList = [...userDataList, newUser]
     localStorage.setItem("userData", JSON.stringify(newUserList))
+    setNewUser({})
+    alert("User Added Successfully")
+    navigate("/add-user")
+    
   };
   const handleUserDataChange = (e) => {
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
