@@ -1,27 +1,38 @@
 import React, { useEffect, useState } from "react";
-
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import Button from "./common/button";
 const TexteditorComponent = (props) => {
-  const [textData, setTextData] = useState("");
+  const [textData, setTextData] = useState(
+    localStorage.getItem("text_editor_content") || ""
+  );
 
   useEffect(() => {
-    const storedTextData=localStorage.getItem("text_editor_content")||"Start typing here....."
-    setTextData(storedTextData)
-  }, []);
+    localStorage.setItem("text_editor_content", textData);
+  }, [textData]);
 
-  const handleTextInputChange = (e) => {
-    setTextData(e.target.value);
-    localStorage.setItem("text_editor_content", e.target.value)
-  };
-
+  //Quill editor toolbar configuration
+  const toolbarOptions = [
+    ["bold", "italic", "underline"],
+    [{ list: "ordered" }, { list: "bullet" }],
+  ];
   return (
-    <textarea
-      className="p-4 w-full border border-2 rounded-md"
-      cols={8}
-      rows={8}
-      onChange={handleTextInputChange}
-      value={textData}
-    >
-    </textarea>
+    <div className="flex flex-col gap-4">
+      <h1 className="text-black font-bold text-2xl text-center">
+        Rich Text Editor
+      </h1>
+      <ReactQuill
+        theme="snow"
+        value={textData}
+        onChange={setTextData}
+        modules={{ toolbar: toolbarOptions }}
+      />
+      <Button
+        onClick={() => alert("Data saved successfully")}
+        extra_css="bg-blue-400 hover:bg-blue-600"
+        text="Save"
+      />
+    </div>
   );
 };
 
