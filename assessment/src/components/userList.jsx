@@ -20,6 +20,14 @@ const UserList = () => {
       setFilteredData(filteredData);
     }
   };
+  const handleDelete = (id) => {
+    const deleteData= userData.filter((elem) => elem.userId !== id)
+    setUserData(deleteData);
+    setFilteredData(deleteData);
+    localStorage.setItem("userData", JSON.stringify(deleteData));
+    alert("User deleted successfully");
+  }
+  
   useEffect(() => {
     const userList = JSON.parse(localStorage.getItem("userData")) || [];
     setUserData([...userList]);
@@ -66,7 +74,11 @@ const UserList = () => {
               </th>
               <td className="px-6 py-4">{elem.email}</td>
               <td className="px-6 py-4">{elem.phone}</td>
-              <td className="px-6 py-4"></td>
+              <td className="px-6 py-4">
+                <button className="text-red-600 hover:text-red-900" onClick={() => handleDelete(elem.userId)}>
+                  Delete
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
