@@ -1,18 +1,20 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './index.css'
+import "./index.css";
+import Layout from "./components/layout";
+import CounterComponent from "./components/counter";
+import { Routes, Route } from "react-router-dom";
+import TexteditorComponent from "./components/texteditor";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div className='bg-red-400 flex justify-center h-96'>
-        Hi tailwind configured
-      </div>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="/counter" element={<CounterComponent />} />
+          <Route path="/text-editor" element={<TexteditorComponent />} />
+        </Route>
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
