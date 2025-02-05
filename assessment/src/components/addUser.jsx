@@ -27,7 +27,7 @@ const AddUser = () => {
     localStorage.setItem("userData", JSON.stringify(newUserList))
     setNewUser({})
     alert("User Added Successfully")
-    navigate("/add-user")
+    navigate("/users")
     
   };
   const handleUserDataChange = (e) => {
