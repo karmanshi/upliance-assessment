@@ -1,13 +1,43 @@
 import React, { useState, useEffect } from "react";
+import InputComponent from "./common/input";
 
 const UserList = () => {
   const [userData, setUserData] = useState([]);
+  const [search, setSearch] = useState("");
+  const [filterdData, setFilteredData] = useState([]);
+
+  const handleSearch = (e) => {
+    let searchVal = e.target.value;
+    setSearch(searchVal);
+    if (searchVal == "") {
+      setFilteredData(userData);
+    }else{
+      const filteredData = userData.filter((elem) => {
+        if(elem.fullName.toLowerCase().includes(search.toLowerCase())){
+          return elem;
+        }
+      });
+      setFilteredData(filteredData);
+    }
+  };
   useEffect(() => {
     const userList = JSON.parse(localStorage.getItem("userData")) || [];
     setUserData([...userList]);
+    setFilteredData([...userList]);
   }, []);
   return (
     <div className="relative overflow-x-auto">
+      <div className="w-[35%] my-5">
+        <InputComponent
+          inputName="search"
+          onChange={handleSearch}
+          value={search}
+          placeholder="Search by full name...."
+          label=""
+          inputId="search"
+          type="search"
+        />
+      </div>
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
@@ -26,7 +56,7 @@ const UserList = () => {
           </tr>
         </thead>
         <tbody>
-          {userData.map((elem) => (
+          {filterdData.map((elem) => (
             <tr className="bg-white border-b border-gray-200" key={elem.userId}>
               <th
                 scope="row"
@@ -41,7 +71,6 @@ const UserList = () => {
           ))}
         </tbody>
       </table>
-
     </div>
   );
 };
