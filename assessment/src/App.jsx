@@ -1,16 +1,16 @@
 import "./index.css";
 import Layout from "./components/layout";
-import CounterComponent from "./components/counter";
 import { Routes, Route } from "react-router-dom";
-import TexteditorComponent from "./components/texteditor";
+import { all_components } from "./components/paths";
 
 function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="/counter" element={<CounterComponent />} />
-          <Route path="/text-editor" element={<TexteditorComponent />} />
+          {all_components.map((elem) => (
+            <Route path={elem.route} element={elem.component} />
+          ))}
         </Route>
       </Routes>
     </>
