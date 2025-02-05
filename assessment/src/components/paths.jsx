@@ -5,7 +5,7 @@ import UserList from "./userList";
 
 export const all_components=[
     {
-        route:"/counter",
+        route:"/",
         component:<CounterComponent />,
         title:"Counter"
     },
